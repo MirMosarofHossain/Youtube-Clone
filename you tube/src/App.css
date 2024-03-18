@@ -1,0 +1,7 @@
+.app_container{
+  height: 90vh;
+  display: flex;
+}
+.app_main {
+  overflow-y: scroll;
+}
