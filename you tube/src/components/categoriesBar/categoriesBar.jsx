@@ -49,11 +49,12 @@ export default function CategoriesBar() {
                      }
                  })
 
-                //  console.log("the cate data : ",data);
+                 console.log("the cate data : ",data);
                dispatch(homeVideoAction.homeVideoSuccess({
                  videos:data.items,
                  nextPageToken:data.nextPageToken,
                  activeCategory:activeElm,
+                 loading:false
              }))    
                  
              } catch (error) {

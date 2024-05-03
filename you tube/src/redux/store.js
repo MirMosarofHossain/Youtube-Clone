@@ -52,14 +52,24 @@ const homeVideoSlice = createSlice({
     initialState:{
         videos:[],
         nextPageToken:null,
-        activeCategory:'All'
+        activeCategory:'All',
+        loading:true
 
     },
     reducers:{
         homeVideoSuccess:(state,action)=>{
             console.log('home video call');
             console.log(action.payload);
-            return state =  {...state,...action.payload}
+            // state.videos = [...state.videos,action.payload.videos]
+            // state.nextPageToken = action.payload.nextPageToken;
+            // state.activeCategory = action.payload.activeCategory;
+            // return state =  {...state,...action.payload}
+            return state =  {...state,
+                videos: state.activeCategory == action.payload.activeCategory ? [...state.videos,...action.payload.videos] : action.payload.videos,
+                nextPageToken:action.payload.nextPageToken,
+                activeCategory:action.payload.activeCategory,
+                loading:action.payload.loading
+            }
         },
         homeVideoFail:(state,action)=>{
             console.log('video load fail');

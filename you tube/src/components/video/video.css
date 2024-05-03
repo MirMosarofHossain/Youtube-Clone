@@ -12,7 +12,7 @@
 .video_top img{
     width: 100%;
 }
-.video_top span{
+.video_top .duration{
 position: absolute;
 right: 0.3rem;
 bottom: 0.3rem;

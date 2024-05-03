@@ -5,7 +5,11 @@
     padding: 1rem 3rem;
     background-color: #16181b;
     height: 10vh;
+    position: fixed;
+    top: 0;
+    z-index: 999;
     width: 100%;
+    
 }
 .header_menu{
     display: none;

@@ -4,6 +4,8 @@ import moment from 'moment';
 import numeral from 'numeral'
 import { useEffect, useState } from 'react';
 import axios from "axios";
+import {useNavigate} from 'react-router-dom'
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 export default function Video({video}){
     // console.log(video);
      
@@ -12,6 +14,11 @@ export default function Video({video}){
      let channelId = video.snippet.channelId;
      let videoId = video.id.videoId;
      let [channelIcon,setChannelIcon]=useState("")
+     const navigate = useNavigate()
+
+     const handleVideoClick = ()=>{
+          navigate(`./watch/${videoId}`,{state:duration})
+     }
 
     useEffect(()=>{
         const getVideoDetails = async ()=>{
@@ -23,9 +30,12 @@ export default function Video({video}){
                         id:videoId
                     }
                 })
-                const miliSecond = moment.duration(data.items[0].contentDetails.duration)
-                setDuration(moment.utc(miliSecond*1000).format("mm:ss"))
-                setViewCount(numeral(data.items[0].statistics.viewCount).format("0.a"))
+                console.log("video info is : " , data)
+                console.log("the video time is : ", data.items[0].contentDetails.duration );
+                // const miliSecond = moment.duration(data.items[0].contentDetails.duration)
+                // setDuration(moment.utc(miliSecond*1000).format("mm:ss"))
+                // setViewCount(numeral(data.items[0].statistics.viewCount).format("0.a"))
+                setDuration(data.items[0].contentDetails.duration )
             } catch (error) {
                 
             }
@@ -58,10 +68,11 @@ export default function Video({video}){
 
     return (
         <>
-        <div className='video'>
+        <div className='video' onClick={handleVideoClick}>
             <div className="video_top">
-                <img src={video.snippet.thumbnails.high.url} alt="" />
-                <span>{duration}</span>
+                {/* <img src={video.snippet.thumbnails.high.url} alt="" /> */}
+                <LazyLoadImage src={video.snippet.thumbnails.high.url} effect='blur'/>
+                <span className='duration'>{duration}</span>
             </div>
             <div className="video_title">
                 {video.snippet.title}
@@ -73,7 +84,8 @@ export default function Video({video}){
                 <span className='publishDate'>  {moment(video.snippet.publishedAt).fromNow()}</span>
             </div>
             <div className="video_channel">
-                <img src={channelIcon} alt="" />
+                {/* <img src={channelIcon} alt="" /> */}
+                <LazyLoadImage src={channelIcon} effect='blur'/>
                 <p>{video.snippet.channelTitle}</p>
             </div>
         </div>
